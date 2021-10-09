@@ -2,6 +2,8 @@ import React, { useMemo, useCallback } from "react";
 import styled from "styled-components";
 import palette from "../styles/palette";
 import { TodoType } from "../types/todo";
+import TrachCanIcon from "../public/static/svg/trash_can.svg";
+import CheckMarkIcon from "../public/static/svg/check_mark.svg";
 
 const Container = styled.div`
   width: 100%;
@@ -191,7 +193,7 @@ const TodoList: React.FC<IProps> = ({ todos }) => {
         });
         return colors;
     }, [todos]);
-    console.log(todoColorNums);
+    // console.log(todoColorNums);
 
     return (
         <Container>
@@ -218,6 +220,12 @@ const TodoList: React.FC<IProps> = ({ todos }) => {
                             </p>
                         </div>
                         <div className="todo-right-side">
+                            {todo.checked && (
+                                <>
+                                    <TrachCanIcon className="todo-trash-can" onClick={() => {}} />
+                                    <CheckMarkIcon className="todo-check-mark" onClick={() => {}} />
+                                </>
+                            )}
                             {!todo.checked && (<button type="button" className="todo-button" onClick={() => {}} /> )}
                         </div>
                     </li>
