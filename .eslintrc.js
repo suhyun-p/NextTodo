@@ -61,12 +61,12 @@ module.exports = {
             tsx: "never",
           }, //import 시 확장자명은 사용하지 않는다.
         ],
-      },
-      settings: {
+    },
+    settings: {
         "import/resolver": {
-          node: {
+            node: {
             extensions: [".js", ".jsx", ".ts", ".tsx", ".d.ts"],
-          },
+            },
         },
-      },
+    },
 };
