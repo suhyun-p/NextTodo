@@ -2,7 +2,6 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
-  "/api/todos": "pages/api/todos.js",
-  "/api/todos/[id]": "pages/api/todos/[id].js",
-  "/": "pages/index.js"
+  "/": "pages/index.js",
+  "/todo/add": "pages/todo/add.js"
 }
