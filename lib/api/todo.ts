@@ -15,3 +15,6 @@ interface AddTodoAPIBody {
 
 //* 투두 추가하기 API
 export const addTodoApi = (body: AddTodoAPIBody) => axios.post("/api/todos", body);
+
+//* 투두 삭제하기 API
+export const deleteTodoApi = (id: number) => axios.delete(`/api/todos/${id}`);
