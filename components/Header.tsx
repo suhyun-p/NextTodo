@@ -15,11 +15,11 @@ const Container = styled.div`
 `;
 
 const Header: React.FC = () => {
-    return (
-        <Container>
-            <h1>Jerrynum's TodoList</h1>
-        </Container>
-    );
+  return (
+    <Container>
+      <h1>Jerrynum's TodoList</h1>
+    </Container>
+  );
 };
 
 export default Header;

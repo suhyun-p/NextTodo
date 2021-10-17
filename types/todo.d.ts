@@ -4,4 +4,3 @@ export type TodoType = {
     color: "red" | "orange" | "yellow" | "green" | "blue" | "navy";
     checked: boolean;
   };
-  

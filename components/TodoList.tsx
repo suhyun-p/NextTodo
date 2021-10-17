@@ -127,54 +127,53 @@ interface IProps {
 }
 
 const TodoList: React.FC<IProps> = ({ todos }) => {
+  const [localTodos, setLocalTodos] = useState(todos);
 
-  const [ localTodos, setLocalTodos ] = useState(todos);
+  //* 색깔 객체 구하기 1
+  const getTodoColorNums = useCallback(() => {
+    let red = 0;
+    let orange = 0;
+    let yellow = 0;
+    let green = 0;
+    let blue = 0;
+    let navy = 0;
+    localTodos.forEach((todo) => {
+      switch (todo.color) {
+        case "red":
+          red += 1;
+          break;
+        case "orange":
+          orange += 1;
+          break;
+        case "yellow":
+          yellow += 1;
+          break;
+        case "green":
+          green += 1;
+          break;
+        case "blue":
+          blue += 1;
+          break;
+        case "navy":
+          navy += 1;
+          break;
+        default:
+          break;
+      }
+    });
 
-    //* 색깔 객체 구하기 1
-    const getTodoColorNums = useCallback(() => {
-        let red = 0;
-        let orange = 0;
-        let yellow = 0;
-        let green = 0;
-        let blue = 0;
-        let navy = 0;
-        localTodos.forEach((todo) => {
-        switch (todo.color) {
-            case "red":
-            red += 1;
-            break;
-            case "orange":
-            orange += 1;
-            break;
-            case "yellow":
-            yellow += 1;
-            break;
-            case "green":
-            green += 1;
-            break;
-            case "blue":
-            blue += 1;
-            break;
-            case "navy":
-            navy += 1;
-            break;
-            default:
-            break;
-        }
-        });
+    return {
+      red,
+      orange,
+      yellow,
+      green,
+      blue,
+      navy,
+    };
+  }, [todos]);
 
-        return {
-        red,
-        orange,
-        yellow,
-        green,
-        blue,
-        navy,
-        };
-    }, [todos]);
-
-    //* 색상별 투두 개수
-    // const todoColorNums = useMemo(getTodoColorNums, [todos]);
+  //* 색상별 투두 개수
+  // const todoColorNums = useMemo(getTodoColorNums, [todos]);
 
     //* 객체의 문자열 인덱스 사용을 위한 타입
     type ObjectIndexType = {
@@ -183,18 +182,18 @@ const TodoList: React.FC<IProps> = ({ todos }) => {
 
     //* 색깔 객체 구하기 2
     const todoColorNums = useMemo(() => {
-        const colors: ObjectIndexType = {};
-        todos.forEach((todo) => {
+      const colors: ObjectIndexType = {};
+      todos.forEach((todo) => {
         const value = colors[todo.color];
         if (!value) {
-            //* 존재하지않던 key라면
-            colors[`${todo.color}`] = 1;
+          //* 존재하지않던 key라면
+          colors[`${todo.color}`] = 1;
         } else {
-            //* 존재하는 키라면
-            colors[`${todo.color}`] = value + 1;
+          //* 존재하는 키라면
+          colors[`${todo.color}`] = value + 1;
         }
-        });
-        return colors;
+      });
+      return colors;
     }, [todos]);
     // console.log(todoColorNums);
 
@@ -205,12 +204,12 @@ const TodoList: React.FC<IProps> = ({ todos }) => {
 
         //* 체크를 적용하는 방법 3(data를 local로 저장하여 사용하기)
         const newTodos = localTodos.map((todo) => {
-          if(todo.id === id) {
+          if (todo.id === id) {
             return { ...todo, checked: !todo.checked };
           }
           return todo;
         });
-        setLocalTodos(newTodos);        
+        setLocalTodos(newTodos);
         console.log("체크했습니다");
       } catch (e) {
         console.log(e);
@@ -224,49 +223,49 @@ const TodoList: React.FC<IProps> = ({ todos }) => {
         const newTodos = localTodos.filter((todo) => todo.id !== id);
         setLocalTodos(newTodos);
         console.log("삭제했습니다");
-      } catch(e) {
+      } catch (e) {
         console.log(e);
       }
-    }
+    };
 
     return (
-        <Container>
-            <div className="todo-list-header">
-                <p className="todo-list-last-todo">
-                    남은 TODO<span>{localTodos.length}개</span>
+      <Container>
+        <div className="todo-list-header">
+          <p className="todo-list-last-todo">
+            남은 TODO<span>{localTodos.length}개</span>
+          </p>
+          <div className="todo-list-header-colors">
+            {Object.keys(todoColorNums).map((color, index) => (
+              <div className="todo-list-header-color-num" key={index}>
+                <div className={`todo-list-header-round-color bg-${color}`} />
+                <p>{todoColorNums[color]}개</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="todo-list">
+          {localTodos.map((todo) => (
+            <li className="todo-item" key={todo.id}>
+              <div className="todo-left-side">
+                <div className={`todo-color-block bg-${todo.color}`} />
+                <p className={`todo-text ${todo.checked ? "checked-todo-text" : ""}`}>
+                  {todo.text}
                 </p>
-                <div className="todo-list-header-colors">
-                    {Object.keys(todoColorNums).map((color, index) => (
-                        <div className="todo-list-header-color-num" key={index}>
-                            <div className={`todo-list-header-round-color bg-${color}`} />
-                            <p>{todoColorNums[color]}개</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
-            <div className="todo-list">
-                {localTodos.map((todo) => (
-                    <li className="todo-item" key={todo.id}>
-                        <div className="todo-left-side">
-                            <div className={`todo-color-block bg-${todo.color}`} />
-                            <p className={`todo-text ${todo.checked ? "checked-todo-text" : ""}`}>
-                                {todo.text}
-                            </p>
-                        </div>
-                        <div className="todo-right-side">
-                            {todo.checked && (
-                                <>
-                                    <TrachCanIcon className="todo-trash-can" onClick={() => { deleteTodo(todo.id) }} />
-                                    <CheckMarkIcon className="todo-check-mark" onClick={() => { checkTodo(todo.id) }} />
-                                </>
-                            )}
-                            {!todo.checked && (<button type="button" className="todo-button" onClick={() => { checkTodo(todo.id)}} /> )}
-                        </div>
-                    </li>
-                ))}
-            </div>
-        </Container>
-    )
+              </div>
+              <div className="todo-right-side">
+                {todo.checked && (
+                <>
+                  <TrachCanIcon className="todo-trash-can" onClick={() => { deleteTodo(todo.id); }} />
+                  <CheckMarkIcon className="todo-check-mark" onClick={() => { checkTodo(todo.id); }} />
+                </>
+                )}
+                {!todo.checked && (<button type="button" className="todo-button" onClick={() => { checkTodo(todo.id); }} />)}
+              </div>
+            </li>
+          ))}
+        </div>
+      </Container>
+    );
 };
 
 export default TodoList;
