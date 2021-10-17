@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import Data from "../../../lib/data";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method == "PATCH") {
+  if (req.method === "PATCH") {
     try {
       const todoId = Number(req.query.id);
       const todo = Data.todo.exist({ id: todoId });
@@ -28,7 +28,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
   }
 
-  if (req.method == "DELETE") {
+  if (req.method === "DELETE") {
     try {
       const todoId = Number(req.query.id);
       const todo = Data.todo.exist({ id: todoId });

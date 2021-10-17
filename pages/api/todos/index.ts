@@ -5,7 +5,7 @@ import { TodoType } from "../../../types/todo";
 import Data from "../../../lib/data";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method == "GET") {
+  if (req.method === "GET") {
     try {
       const todos = Data.todo.getList();
       res.statusCode = 200;
@@ -15,7 +15,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       res.statusCode = 500;
       res.send(e);
     }
-  } else if (req.method == "POST") {
+  } else if (req.method === "POST") {
     //* 값을 받았는지 확인
     const { text, color } = req.body;
     if (!text || !color) {
